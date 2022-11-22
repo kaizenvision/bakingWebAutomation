@@ -81,5 +81,10 @@ public class ExcelReader extends BaseClass {
 		return sh.getLastRowNum();
 	}
 	
+	public int getRowCol(Sheet sh) {
+		
+		return sh.getLastRowNum();
+	}
+	
 
 }
