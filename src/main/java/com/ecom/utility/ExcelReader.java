@@ -34,7 +34,7 @@ public class ExcelReader extends BaseClass {
 		
 		Object[][] excelData = new Object[rowCount][1];
 		
-		for(int i=0; i<rowCount; i++) {
+		for(int i=1; i<=rowCount; i++) {
 			
 			Map<String, Object> data = new HashMap<>();
 			
@@ -50,10 +50,15 @@ public class ExcelReader extends BaseClass {
 					data.put(sh.getRow(0).getCell(j).getStringCellValue(), 
 							sh.getRow(i).getCell(j).getNumericCellValue());
 				}
+				else {
+					System.out.println("cell type not match..");
+				}
 				
 			}
 			
-			excelData[i][0] = data;
+			//excelData[i][0] = data;
+			
+			System.out.println(data);
 			
 			data.forEach(finalData::put);
 		}
