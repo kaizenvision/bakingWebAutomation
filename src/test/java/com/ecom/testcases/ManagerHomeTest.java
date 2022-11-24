@@ -1,6 +1,7 @@
 package com.ecom.testcases;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Map;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -48,6 +49,7 @@ public class ManagerHomeTest extends BaseClass {
 	
 	@Test(priority = 1)
 	public void testClickOnNewCustomer() {
+		Utility.applyImplicitWait();
 		managerHomePom.clickOnNewCustomer();
 	}
 
