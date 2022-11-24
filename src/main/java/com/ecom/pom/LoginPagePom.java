@@ -27,10 +27,14 @@ public class LoginPagePom extends BaseClass{
 	@FindBy(xpath = "//a[text()='here']")
 	WebElement getCredentials;
 	
-	public void loginWithValidCredentials(String userName, String passwordMap) {
-		userId.sendKeys(userName);
-		password.sendKeys(passwordMap);
+	public void setLoginCredentials(Object userName, Object passwordMap) {
+		userId.sendKeys(userName.toString());
+		password.sendKeys(passwordMap.toString());
+	}
+	
+	public ManagerHomePom clickOnLogin() {
 		loginButton.click();
+		return new ManagerHomePom();
 	}
 	
 	

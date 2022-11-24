@@ -1,5 +1,11 @@
 package com.ecom.utility;
 
-public class Utility {
+import com.ecom.base.BaseClass;
+
+public class Utility extends BaseClass {
+	
+	public String getTitle() {
+		return driver.getTitle();
+	}
 
 }

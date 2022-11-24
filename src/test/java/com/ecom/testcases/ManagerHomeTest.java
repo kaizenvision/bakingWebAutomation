@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -13,14 +12,16 @@ import org.testng.asserts.SoftAssert;
 
 import com.ecom.base.BaseClass;
 import com.ecom.pom.LoginPagePom;
+import com.ecom.pom.ManagerHomePom;
 import com.ecom.utility.ExcelReader;
 import com.ecom.utility.Utility;
 
-public class LoginTest extends BaseClass{
+public class ManagerHomeTest extends BaseClass {
 	
 	LoginPagePom loginPagePom;
 	ExcelReader excelReader;
 	Utility utility;
+	ManagerHomePom managerHomePom;
 	
 	@BeforeClass
 	public void setUp() {
@@ -32,14 +33,7 @@ public class LoginTest extends BaseClass{
 		driver.quit();
 	}
 	
-	@Test
-	public void testTitle() {
-		utility = new Utility();
-		String title = utility.getTitle();
-		Assert.assertEquals(title, "GTPL Bank Home");
-	}
-	
-	@Test
+	@Test(priority = 0)
 	public void testValidLogin() throws EncryptedDocumentException, IOException {
 		SoftAssert softAssert = new SoftAssert();
 		excelReader = new ExcelReader();
@@ -48,8 +42,13 @@ public class LoginTest extends BaseClass{
 		loginPagePom = new LoginPagePom();
 		loginPagePom.setLoginCredentials(data.get("userid"), data.get("password"));
 		softAssert.assertEquals(data.get("userid").toString(), "mngr455515");
-		loginPagePom.clickOnLogin();
+		managerHomePom = loginPagePom.clickOnLogin();
 		softAssert.assertAll();
+	}
+	
+	@Test(priority = 1)
+	public void testClickOnNewCustomer() {
+		managerHomePom.clickOnNewCustomer();
 	}
 
 }
