@@ -1,8 +1,13 @@
 package com.ecom.utility;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,6 +31,15 @@ public class Utility extends BaseClass {
 		
 		wait.until(ExpectedConditions.elementToBeClickable(ele));
 		
+	}
+	
+	// fluent wait pending
+	
+	public static void takeScreenShot(String name) throws IOException {
+		
+		File screenshotSrc = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		String des = projectPath + "//screenshot//"+name+".jpeg";
+		FileUtils.copyFile(screenshotSrc,new File(des));
 	}
 
 }

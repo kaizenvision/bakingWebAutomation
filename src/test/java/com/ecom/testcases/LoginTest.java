@@ -33,13 +33,14 @@ public class LoginTest extends BaseClass{
 	}
 	
 	@Test
-	public void testTitle() {
+	public void testTitle() throws IOException {
 		utility = new Utility();
 		String title = utility.getTitle();
+		Utility.takeScreenShot("homePage");
 		Assert.assertEquals(title, "GTPL Bank Home");
 	}
 	
-	@Test
+	@Test(groups = {"validLogin"})
 	public void testValidLogin() throws EncryptedDocumentException, IOException {
 		SoftAssert softAssert = new SoftAssert();
 		excelReader = new ExcelReader();
