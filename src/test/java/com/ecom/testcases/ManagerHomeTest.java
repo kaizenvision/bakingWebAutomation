@@ -26,7 +26,8 @@ public class ManagerHomeTest extends BaseClass {
 	
 	@BeforeClass
 	public void setUp() {
-		initDriver();
+		//initDriver();
+		managerHomePom = new ManagerHomePom();
 	}
 	
 	@AfterClass
@@ -34,20 +35,7 @@ public class ManagerHomeTest extends BaseClass {
 		driver.quit();
 	}
 	
-	@Test(priority = 0)
-	public void testValidLogin() throws EncryptedDocumentException, IOException {
-		SoftAssert softAssert = new SoftAssert();
-		excelReader = new ExcelReader();
-		Sheet sh = excelReader.getSheet("loginpage");
-		Map<String, Object> data = excelReader.getData(sh);
-		loginPagePom = new LoginPagePom();
-		loginPagePom.setLoginCredentials(data.get("userid"), data.get("password"));
-		softAssert.assertEquals(data.get("userid").toString(), "mngr455515");
-		managerHomePom = loginPagePom.clickOnLogin();
-		softAssert.assertAll();
-	}
-	
-	@Test(priority = 1)
+	@Test(dependsOnGroups = {"validLogin"})
 	public void testClickOnNewCustomer() {
 		Utility.applyImplicitWait();
 		managerHomePom.clickOnNewCustomer();

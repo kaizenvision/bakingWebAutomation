@@ -29,7 +29,7 @@ public class LoginTest extends BaseClass{
 	
 	@AfterClass
 	public void tearDown() {
-		driver.quit();
+		//driver.quit();
 	}
 	
 	@Test
