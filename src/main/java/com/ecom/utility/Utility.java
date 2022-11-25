@@ -38,7 +38,7 @@ public class Utility extends BaseClass {
 	public static void takeScreenShot(String name) throws IOException {
 		
 		File screenshotSrc = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		String des = projectPath + "//screenshot//"+name+".jpeg";
+		String des = projectPath + "//screenshot//"+name+""+".jpeg";
 		FileUtils.copyFile(screenshotSrc,new File(des));
 	}
 
