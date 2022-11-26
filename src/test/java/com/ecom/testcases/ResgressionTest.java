@@ -24,7 +24,7 @@ public class ResgressionTest {
 		System.out.println("in test4");
 	}
 	
-	@Test
+	@Test(timeOut = 30)
 	public void test5() {
 		System.out.println("in test5");
 	}
