@@ -6,8 +6,11 @@ import java.util.Map;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -34,28 +37,50 @@ public class LoginTest extends BaseClass{
 	ExtentReports extentReports ;
 	ExtentTest logger;
 	
-	
 	@BeforeClass
-	public void setUp() {
+	public void openBrowser() {
 		initDriver();
+
 		extentSparkReporter = new ExtentSparkReporter(projectPath+"//extentReport//testReport.html");
 		extentReports = new ExtentReports();
 		extentReports.attachReporter(extentSparkReporter);
 	}
 	
+	@BeforeMethod
+	public void setUp() {
+		
+	}
+	
+	@AfterMethod
+	public void tearDown(ITestResult result) throws IOException {
+		
+		//if(result.getStatus() == ITestResult.FAILURE) {
+			
+			
+			//logger.log(Status.FAIL, MediaEntityBuilder.createScreenCaptureFromPath(Utility.takeScreenShot(result.getName())).build());
+			logger.addScreenCaptureFromPath(Utility.takeScreenShot(result.getName()), result.getName()+"test");
+			
+		//}
+		
+		
+	}
+	
 	@AfterClass
-	public void tearDown() {
+	public void closeBrowser() {
 		extentReports.flush();
 		driver.quit();
 	}
+	
+	
 	
 	@Test
 	public void testTitle() throws IOException {
 		logger = extentReports.createTest("testTitle");
 		utility = new Utility();
 		String title = utility.getTitle();
+		logger.log(Status.FAIL, "i am not getting the exact title");
+		Assert.assertEquals(title, "GTPL Bank Home");
 		logger.log(Status.PASS, "i am getting the exact title");
-		Assert.assertEquals(title, "GTPL Bank Home Page");
 		//logger.log(Status.PASS, MediaEntityBuilder.createScreenCaptureFromPath(title));
 	}
 	

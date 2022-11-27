@@ -35,11 +35,12 @@ public class Utility extends BaseClass {
 	
 	// fluent wait pending
 	
-	public static void takeScreenShot(String name) throws IOException {
+	public static String takeScreenShot(String name) throws IOException {
 		
 		File screenshotSrc = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		String des = projectPath + "//screenshot//"+name+""+".jpeg";
 		FileUtils.copyFile(screenshotSrc,new File(des));
+		return des;
 	}
 
 }
