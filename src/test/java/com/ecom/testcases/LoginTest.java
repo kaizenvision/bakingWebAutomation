@@ -25,6 +25,7 @@ import com.ecom.pom.LoginPagePom;
 import com.ecom.utility.ExcelReader;
 import com.ecom.utility.Utility;
 import com.listner.MyListner;
+import com.retry.RetryTest;
 
 @Listeners(MyListner.class)
 public class LoginTest extends BaseClass{
@@ -73,7 +74,7 @@ public class LoginTest extends BaseClass{
 	
 	
 	
-	@Test
+	@Test(retryAnalyzer = RetryTest.class)
 	public void testTitle() throws IOException {
 		logger = extentReports.createTest("testTitle");
 		utility = new Utility();
