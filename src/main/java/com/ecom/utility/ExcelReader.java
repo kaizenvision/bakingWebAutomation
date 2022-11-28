@@ -26,7 +26,7 @@ public class ExcelReader extends BaseClass {
 		return sh;
 	}
 	
-	public Map<String, Object> getData(Sheet sh) {
+	public Object[][] getData(Sheet sh) {
 		
 		int rowCount = sh.getLastRowNum();
 		
@@ -34,7 +34,8 @@ public class ExcelReader extends BaseClass {
 		
 		Object[][] excelData = new Object[rowCount][1];
 		
-		for(int i=1; i<=rowCount; i++) {
+		
+		for(int i=0; i<rowCount; i++) {
 			
 			Map<String, Object> data = new HashMap<>();
 			
@@ -44,11 +45,11 @@ public class ExcelReader extends BaseClass {
 				
 				if(sh.getRow(i).getCell(j).getCellType().toString().equalsIgnoreCase("string")) {
 					data.put(sh.getRow(0).getCell(j).getStringCellValue(), 
-						sh.getRow(i).getCell(j).getStringCellValue());
+						sh.getRow(i+1).getCell(j).getStringCellValue());
 				}
 				else if(sh.getRow(i).getCell(j).getCellType().toString().equalsIgnoreCase("numeric")){
 					data.put(sh.getRow(0).getCell(j).getStringCellValue(), 
-							sh.getRow(i).getCell(j).getNumericCellValue());
+							sh.getRow(i+1).getCell(j).getNumericCellValue());
 				}
 				else {
 					System.out.println("cell type not match..");
@@ -56,14 +57,16 @@ public class ExcelReader extends BaseClass {
 				
 			}
 			
-			//excelData[i][0] = data;
+			excelData[i][0] = data;
 			
-			System.out.println(data);
+		
 			
 			data.forEach(finalData::put);
+			
+			
 		}
 		
-		return finalData;
+		return excelData;
 	}
 	
 	public Object getSingleData(Sheet sh, int row, int col) {

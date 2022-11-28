@@ -1,5 +1,6 @@
 package com.ecom.testcases;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -26,6 +28,7 @@ import com.ecom.utility.ExcelReader;
 import com.ecom.utility.Utility;
 import com.listner.MyListner;
 import com.retry.RetryTest;
+import com.userexception.BusinessException;
 
 @Listeners(MyListner.class)
 public class LoginTest extends BaseClass{
@@ -40,8 +43,8 @@ public class LoginTest extends BaseClass{
 	
 	@BeforeClass
 	public void openBrowser() {
-		initDriver();
-
+		
+		
 		extentSparkReporter = new ExtentSparkReporter(projectPath+"//extentReport//testReport.html");
 		extentReports = new ExtentReports();
 		extentReports.attachReporter(extentSparkReporter);
@@ -49,7 +52,7 @@ public class LoginTest extends BaseClass{
 	
 	@BeforeMethod
 	public void setUp() {
-		
+		initDriver();
 	}
 	
 	@AfterMethod
@@ -63,13 +66,13 @@ public class LoginTest extends BaseClass{
 			
 		//}
 		
-		
+			driver.quit();
 	}
 	
 	@AfterClass
 	public void closeBrowser() {
 		extentReports.flush();
-		driver.quit();
+		
 	}
 	
 	
@@ -85,18 +88,24 @@ public class LoginTest extends BaseClass{
 		//logger.log(Status.PASS, MediaEntityBuilder.createScreenCaptureFromPath(title));
 	}
 	
-	@Test(groups = {"validLogin"})
-	public void testValidLogin() throws EncryptedDocumentException, IOException {
-		logger = extentReports.createTest("testValidLogin");
-		SoftAssert softAssert = new SoftAssert();
+	@DataProvider( name = "exceldata" )
+	public Object[][] getExcelData() throws EncryptedDocumentException, IOException {
 		excelReader = new ExcelReader();
 		Sheet sh = excelReader.getSheet("loginpage");
-		Map<String, Object> data = excelReader.getData(sh);
+		Object[][] data = excelReader.getData(sh);
+		return data;
+	}
+	
+	@Test(groups = {"validLogin"}, dataProvider = "exceldata")
+	public void testValidLogin(Map<String, String> data) {
+		logger = extentReports.createTest("testValidLogin");
+	//	SoftAssert softAssert = new SoftAssert();
 		loginPagePom = new LoginPagePom();
 		loginPagePom.setLoginCredentials(data.get("userid"), data.get("password"));
-		softAssert.assertEquals(data.get("userid").toString(), "mngr455515");
-		loginPagePom.clickOnLogin();
-		softAssert.assertAll();
+		//throw new BusinessException();
+	//	softAssert.assertEquals(data.get("userid").toString(), "mngr455515");
+		//loginPagePom.clickOnLogin();
+		//softAssert.assertAll();
 	}
 
 }
