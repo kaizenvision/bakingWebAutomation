@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -16,11 +17,14 @@ import com.ecom.pom.LoginPagePom;
 import com.ecom.utility.ExcelReader;
 import com.ecom.utility.Utility;
 
+@Listeners()
 public class LoginTest extends BaseClass{
 	
 	LoginPagePom loginPagePom;
 	ExcelReader excelReader;
 	Utility utility;
+	
+	
 	
 	@BeforeClass
 	public void setUp() {
@@ -32,12 +36,12 @@ public class LoginTest extends BaseClass{
 		driver.quit();
 	}
 	
-	@Test
+	@Test(groups = {"testdependent"})
 	public void testTitle() throws IOException {
 		utility = new Utility();
 		String title = utility.getTitle();
 		Utility.takeScreenShot("homePage");
-		Assert.assertEquals(title, "GTPL Bank Home");
+		Assert.assertEquals(title, "GTPL Bank Home Page");
 	}
 	
 	@Test(groups = {"validLogin"})
@@ -51,6 +55,8 @@ public class LoginTest extends BaseClass{
 		softAssert.assertEquals(data.get("userid").toString(), "mngr455515");
 		loginPagePom.clickOnLogin();
 		softAssert.assertAll();
+		
+		
 	}
 
 }
